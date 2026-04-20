@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "face-trait-transformer"
+version = "0.1.0"
+description = "Predict 34-dimensional perceived-trait vectors from face images, trained on the One Million Impressions (OMI) dataset."
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{name = "Kiante Fernandez", email = "kiantefernan@gmail.com"}]
+license = {text = "MIT"}
+keywords = ["face", "perception", "traits", "dinov2", "omi", "psychology", "deep-learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "torch>=2.2",
+    "torchvision>=0.17",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "pillow>=10.0",
+    "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+hub = ["huggingface_hub>=0.20"]
+figures = ["matplotlib>=3.7"]
+training = [
+    "tqdm>=4.65",
+    "matplotlib>=3.7",
+]
+dev = [
+    "pytest>=7",
+    "ruff>=0.4",
+    "huggingface_hub>=0.20",
+    "matplotlib>=3.7",
+]
+
+[project.scripts]
+ftt = "face_trait_transformer.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/kiante-fernandez/face-trait-transformer"
+Repository = "https://github.com/kiante-fernandez/face-trait-transformer"
+"Model weights" = "https://huggingface.co/kiante/face-trait-transformer"
+"OMI dataset" = "https://github.com/jcpeterson/omi"
+"Peterson et al. 2022" = "https://www.pnas.org/doi/10.1073/pnas.2115228119"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+face_trait_transformer = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+exclude = ["training", "examples", "tests/fixtures"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+# E501: long lines are fine; E701/E702: we use compact one-liners in plotting code.
+ignore = ["E501", "E701", "E702"]

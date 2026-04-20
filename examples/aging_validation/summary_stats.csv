@@ -1,0 +1,24 @@
+test,group,n,mean,std,median,note
+age_vs_group,young,365,34.55840947123288,5.1243583079366,34.582657,
+age_vs_group,middle,348,50.62206999425287,4.752930615242575,50.248743000000005,
+age_vs_group,old,365,63.14360769041096,4.672981177977704,63.65669,
+age_vs_group,spearman,1078,0.9196941288593221,0.0,,
+age_vs_group,anova,1078,3178.0921379863134,0.0,,
+happy_vs_emotion,happy,161,71.72603231677019,6.601826616106836,72.39332,
+happy_vs_emotion,surprise,135,31.76724240740741,5.085486299712113,31.57257,
+happy_vs_emotion,neutral,89,28.76746029213483,5.662081793356634,29.136679,
+happy_vs_emotion,sad,120,24.436941033333333,5.37556441992791,24.5105115,
+happy_vs_emotion,disgust,132,37.24534143939394,7.3946820529168145,36.947722999999996,
+happy_vs_emotion,fear,129,35.4266561627907,8.83973566832711,35.600964,
+happy_vs_emotion,angry,126,24.1076836984127,5.942620967515797,24.164864,
+happy_vs_emotion,happy_vs_neutral_t,892,54.08305924205767,1.0934770211015708e-123,,
+happy_vs_emotion,anova,892,937.4357737320134,0.0,,
+gender_vs_coded,female,523,27.550393389101338,8.94808040961617,25.970524,
+gender_vs_coded,male,555,81.53905268288288,8.296190133304084,83.32267,
+gender_vs_coded,male_vs_female_t,1078,102.56033957868983,0.0,,
+demographic_vs_coded,african,176,53.46255934090909,66.74545244886363,,expected_attr=black  argmax_attr=middle-eastern
+demographic_vs_coded,asian,248,47.77152345564516,51.562857778225805,,expected_attr=asian  argmax_attr=hispanic
+demographic_vs_coded,indian,167,43.053450125748505,67.40315925149702,,expected_attr=asian  argmax_attr=hispanic
+demographic_vs_coded,latin,147,52.816609020408166,61.44024880272109,,expected_attr=hispanic  argmax_attr=white
+demographic_vs_coded,middle_eastern,161,49.19361660869565,61.70417719875776,,expected_attr=middle-eastern  argmax_attr=white
+demographic_vs_coded,white,179,87.29402754748604,87.29402754748604,,expected_attr=white  argmax_attr=white

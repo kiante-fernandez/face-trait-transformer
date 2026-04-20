@@ -1,0 +1,622 @@
+[
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.1,
+    "lr": 0.0001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.1,
+    "lr": 0.0001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.1,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.1,
+    "lr": 0.0003,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.1,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.1,
+    "lr": 0.001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.2,
+    "lr": 0.0001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.2,
+    "lr": 0.0001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.2,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.2,
+    "lr": 0.001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.3,
+    "lr": 0.0001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.3,
+    "lr": 0.0001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 512,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.1,
+    "lr": 0.0001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.1,
+    "lr": 0.0001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.1,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.1,
+    "lr": 0.0003,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.1,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.1,
+    "lr": 0.001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.2,
+    "lr": 0.0001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.2,
+    "lr": 0.0001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.2,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.2,
+    "lr": 0.001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.3,
+    "lr": 0.0001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.3,
+    "lr": 0.0001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.1,
+    "lr": 0.0001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.1,
+    "lr": 0.0001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.1,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.1,
+    "lr": 0.0003,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.1,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.1,
+    "lr": 0.001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.2,
+    "lr": 0.0001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.2,
+    "lr": 0.0001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.2,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.2,
+    "lr": 0.001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.3,
+    "lr": 0.0001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.3,
+    "lr": 0.0001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "wd": 0.0001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.3,
+    "lr": 0.001,
+    "wd": 0.001,
+    "seed": 0,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 1,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 1,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 1,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 1,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 2,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 1024,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 2,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.2,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 2,
+    "epochs": 400,
+    "patience": 40
+  },
+  {
+    "head": "mlp",
+    "hidden": 2048,
+    "dropout": 0.3,
+    "lr": 0.0003,
+    "wd": 0.0001,
+    "seed": 2,
+    "epochs": 400,
+    "patience": 40
+  }
+]

@@ -1,0 +1,20 @@
+Model weights (the trained checkpoints distributed on HuggingFace Hub at
+`kiante/face-trait-transformer`) are derived from the One Million Impressions
+(OMI) dataset by Peterson, Uddenberg, Griffiths, Todorov, and Suchow (2022)
+and are therefore distributed under the same license as the dataset:
+
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+    (CC BY-NC-SA 4.0)
+
+Full text: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+In brief:
+
+- You may share and adapt the weights for **non-commercial** purposes.
+- You must give appropriate **attribution** to this project AND to the
+  underlying Peterson et al. (2022) paper.
+- If you remix or build upon the weights, you must distribute your
+  contributions under the **same license**.
+
+The code in this repository (everything outside the published weight files)
+is separately licensed under the MIT License — see LICENSE.
