@@ -26,7 +26,19 @@ from face_trait_transformer import TraitPredictor
 m = TraitPredictor.from_pretrained("kiante/face-trait-transformer")
 row = m.predict("face.jpg")            # pandas.Series, 34 attributes, 0–100 scale
 df  = m.predict(["a.jpg", "b.jpg"])    # pandas.DataFrame (N × 35, filename + 34 attrs)
+
+# One-liner that also saves a diagnostic figure
+row, fig = m.predict_with_figure("face.jpg", "diag.png")
 ```
+
+## Example output
+
+The `predict_with_figure(...)` helper returns a three-panel diagnostic: the
+input face on the left, a radar of the 34 predicted traits in the middle,
+and a sorted bar chart on the right. Below: a test-set face, observed ratings
+in black and predictions in red.
+
+![example diagnostic panel](assets/example_diagnostic.png)
 
 ## Model summary
 
