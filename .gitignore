@@ -37,3 +37,12 @@ training/cache/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# LaTeX aux files (the schematic source lives in figures/schematic/)
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.toc
+*.out

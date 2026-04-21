@@ -1,0 +1,216 @@
+% face-trait-transformer — workflow schematic.
+% Build: latexmk -pdf schematic.tex  (or ./build.sh for PDF + high-DPI PNG)
+%
+% Two-branch cross-model ensemble:
+%   image -> [preprocess @ 518] -> ViT-G/14 (frozen) -> 10 MLP heads -> mean_A
+%         -> [preprocess @ 224] -> ViT-L/14 (last-block fine-tune) + head -> branch_B
+%         -> mean(A, B) -> 34-d perceived-trait vector; with horizontal-flip TTA.
+%
+\documentclass[tikz,border=8pt,multi=false]{standalone}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usetikzlibrary{positioning,shapes.geometric,shapes.multipart,arrows.meta,calc,fit,backgrounds,decorations.pathreplacing}
+
+% ---- palette (matches matplotlib "tab:" colors) ----------------------------
+\definecolor{frozen}{HTML}{4C72B0}   % blue
+\definecolor{trainable}{HTML}{DD8452} % orange
+\definecolor{mixed}{HTML}{8172B3}    % purple (partial-unfreeze)
+\definecolor{merge}{HTML}{C44E52}    % red
+\definecolor{output}{HTML}{333333}   % near-black
+
+% ---- styles ---------------------------------------------------------------
+\tikzset{
+  % All nodes share rounded corners + thin border.
+  every node/.style = {
+    font=\small,
+    align=center,
+    rounded corners=2pt,
+    draw=black!70, thick, inner sep=4pt,
+  },
+  % Typography of free-standing labels
+  label/.style = {draw=none, font=\footnotesize, align=center},
+  % Component categories
+  stage/.style = {fill=black!5, minimum width=2.4cm, minimum height=0.9cm},
+  backbone/.style = {fill=frozen!15, draw=frozen!85, minimum width=3.4cm, minimum height=1.3cm},
+  headft/.style = {fill=trainable!18, draw=trainable!85, minimum width=3.4cm, minimum height=1.3cm},
+  mixedbb/.style = {fill=mixed!15, draw=mixed!85, minimum width=3.4cm, minimum height=1.3cm},
+  agg/.style = {fill=trainable!10, draw=trainable!80, minimum width=2.3cm, minimum height=0.9cm},
+  crossmean/.style = {fill=merge!15, draw=merge!85, very thick, minimum width=2.3cm, minimum height=1.1cm, font=\small\bfseries},
+  outvec/.style = {fill=output, text=white, draw=output, minimum width=1.3cm, minimum height=1.3cm, font=\small\bfseries},
+  % Arrow styling
+  arrow/.style = {-{Latex[length=3pt,width=3pt]}, line width=0.6pt, draw=black!75},
+  sidearrow/.style = {arrow, dashed},
+  % Head-stack rectangle (individual one; we'll place 10 of them by hand).
+  headrect/.style = {draw=trainable!85, fill=trainable!18, thick, rounded corners=2pt,
+                     minimum width=2.1cm, minimum height=0.95cm, inner sep=0pt},
+}
+
+\begin{document}
+\begin{tikzpicture}[node distance=10pt, x=1cm, y=1cm]
+
+% =============================================================================
+% Row Y coordinates
+% =============================================================================
+\def\yTop{2.1}
+\def\yMid{0}
+\def\yBot{-2.1}
+
+% =============================================================================
+% Title
+% =============================================================================
+\node[draw=none, font=\large\bfseries] (title) at (7.2, 4.05)
+  {face-trait-transformer: image $\to$ 34-d perceived-trait vector};
+\node[draw=none, font=\footnotesize\itshape] at (7.2, 3.6)
+  {Cross-model ensemble of frozen ViT-G/14 heads + partially fine-tuned ViT-L/14, with horizontal-flip TTA};
+
+% =============================================================================
+% Input
+% =============================================================================
+\node[draw=black!70, line width=0.6pt, inner sep=0pt, rounded corners=3pt] (inputimg)
+  at (0, \yMid) {\includegraphics[width=1.8cm]{face_input.jpg}};
+\node[label, below=2pt of inputimg] {face image $\mathbf{x}$};
+
+% =============================================================================
+% TTA hub
+% =============================================================================
+\node[stage, right=20pt of inputimg] (tta) {test-time aug\\\scriptsize (original $+$ h-flip)};
+
+\draw[arrow] (inputimg) -- (tta);
+
+% =============================================================================
+% Branch A (top): frozen ViT-G @ 518 + 10-head ensemble
+% =============================================================================
+\node[stage, right=14pt of tta, yshift=1.3cm] (prepA) {preprocess\\\scriptsize $224\!\!\times\!\!256 \to$ crop $518$};
+\node[backbone, right=14pt of prepA] (bbA) {\textbf{DINOv2 ViT-G/14} \\[-1pt]
+  \footnotesize frozen, $\sim$1.1B params \\[-1pt]
+  \footnotesize CLS $\in \mathbb{R}^{1536}$};
+\node[label, below=2pt of bbA, font=\scriptsize, text=frozen!80] {frozen};
+
+% Head stack: 10 overlapping rectangles. Back layer drawn first so the
+% front layer and its text end up on top.
+\coordinate (stackAbase) at ($(bbA.east) + (2.0,0)$);
+\foreach \i in {9,8,...,0} {
+  \node[headrect, xshift=\i*3pt, yshift=-\i*3pt] (headA-\i) at (stackAbase) {};
+}
+\node[draw=none, font=\scriptsize\bfseries, align=center, text=trainable!85] at (stackAbase) {10 MLP\\heads};
+
+\node[agg, right=80pt of stackAbase] (meanA) {mean over\\10 heads};
+
+\draw[arrow] (tta.north east) -- ++(6pt,0) |- (prepA.west);
+\draw[arrow] (prepA) -- (bbA);
+\draw[arrow] (bbA.east) -- (headA-0.west);
+\draw[arrow] (headA-0.east) -- (meanA.west);
+
+% =============================================================================
+% Branch B (bottom): partially-finetuned ViT-L @ 224 + single head
+% =============================================================================
+\node[stage, right=14pt of tta, yshift=-1.3cm] (prepB) {preprocess\\\scriptsize $224\!\!\times\!\!256 \to$ crop $224$};
+\node[mixedbb, right=14pt of prepB] (bbB) {\textbf{DINOv2 ViT-L/14} \\[-1pt]
+  \footnotesize last block unfrozen \\[-1pt]
+  \footnotesize CLS $\in \mathbb{R}^{1024}$};
+\node[label, below=2pt of bbB, font=\scriptsize, text=mixed!80] {partial fine-tune};
+
+\node[headft, right=14pt of bbB, minimum width=2.2cm, minimum height=1.0cm] (headB)
+  {MLP head\\\footnotesize $1024 \to 1024 \to 34$};
+\node[agg, right=58pt of stackAbase, yshift=-2.6cm] (outB) {branch-$B$\\prediction};
+
+\draw[arrow] (tta.south east) -- ++(6pt,0) |- (prepB.west);
+\draw[arrow] (prepB) -- (bbB);
+\draw[arrow] (bbB) -- (headB);
+\draw[arrow] (headB.east) -- (outB.west);
+
+% =============================================================================
+% Cross-branch mean
+% =============================================================================
+\node[crossmean, right=24pt of meanA, yshift=-1.3cm] (merge) {mean of\\ViT-G \& ViT-L-FT};
+
+\draw[arrow, merge!80, thick] (meanA.east) -- ++(0.4,0) |- (merge.west);
+\draw[arrow, merge!80, thick] (outB.east)   -- ++(0.4,0) |- (merge.west);
+
+% =============================================================================
+% Output vector
+% =============================================================================
+\node[outvec, right=18pt of merge] (out) {34-d\\trait\\vector};
+\draw[arrow, very thick] (merge.east) -- (out.west);
+\node[label, below=2pt of out, font=\scriptsize] {$\hat{\mathbf{y}} \in [0,100]^{34}$};
+
+% ---- Horizontal color legend in the strip above the bottom panels ----------
+\def\ly{-3.9}
+\def\lw{0.3}
+\def\lh{0.3}
+\node[label, font=\scriptsize\bfseries, anchor=west] at (0, \ly) {Legend:};
+\node[draw=frozen!85,    fill=frozen!15,    thick, rounded corners=1pt,
+      minimum width=\lw cm, minimum height=\lh cm, inner sep=0pt] (lg1) at (1.35, \ly) {};
+\node[label, font=\scriptsize, anchor=west] at ($(lg1.east)+(0.08,0)$) {frozen backbone};
+\node[draw=trainable!85, fill=trainable!18, thick, rounded corners=1pt,
+      minimum width=\lw cm, minimum height=\lh cm, inner sep=0pt] (lg2) at (4.9, \ly) {};
+\node[label, font=\scriptsize, anchor=west] at ($(lg2.east)+(0.08,0)$) {trainable head / mean};
+\node[draw=mixed!85,     fill=mixed!15,     thick, rounded corners=1pt,
+      minimum width=\lw cm, minimum height=\lh cm, inner sep=0pt] (lg3) at (9.1, \ly) {};
+\node[label, font=\scriptsize, anchor=west] at ($(lg3.east)+(0.08,0)$) {partial fine-tune};
+\node[draw=merge!85,     fill=merge!15,     thick, rounded corners=1pt,
+      minimum width=\lw cm, minimum height=\lh cm, inner sep=0pt] (lg4) at (12.5, \ly) {};
+\node[label, font=\scriptsize, anchor=west] at ($(lg4.east)+(0.08,0)$) {cross-model aggregation};
+
+% =============================================================================
+% Group outlines (for visual grouping of branches)
+% =============================================================================
+\begin{scope}[on background layer]
+  \node[draw=frozen!70, dashed, thick, rounded corners=6pt, inner sep=10pt,
+        fit=(prepA)(bbA)(headA-0)(headA-9)(meanA),
+        label={[text=frozen!85, font=\scriptsize\bfseries]above:{Branch A: frozen-backbone head ensemble}}] {};
+  \node[draw=mixed!70, dashed, thick, rounded corners=6pt, inner sep=10pt,
+        fit=(prepB)(bbB)(headB)(outB),
+        label={[text=mixed!85, font=\scriptsize\bfseries]below:{Branch B: end-to-end fine-tune (last block)}}] {};
+\end{scope}
+
+% =============================================================================
+% Bottom legend: training / selection / evaluation
+% Three equal-width columns; fixed text-width prevents overlap.
+% =============================================================================
+\def\ypanel{-5.6}
+\def\colAx{-0.5}
+\def\colBx{7.2}
+\def\colCx{14.9}
+\def\colwidth{7.0cm}
+
+\node[label, font=\small\bfseries, anchor=north west] at (\colAx,\ypanel)
+  {Training};
+\node[label, anchor=north west, align=left, font=\scriptsize, text width=\colwidth]
+      at (\colAx,\ypanel-0.4) {%
+  \textbullet\ 803 train / 100 val stimuli (seed-0, 80/10/10) \\
+  \textbullet\ AdamW, cosine LR, batch 64, $\leq$400 epochs \\
+  \textbullet\ Loss: variance-weighted MSE,\\\phantom{\textbullet} \(w_{ij}=\text{med}(\sigma)/(\sigma_{ij}+\varepsilon)\) \\
+  \textbullet\ Early stop on val mean Pearson $r$ (patience 40)
+};
+
+\node[label, font=\small\bfseries, anchor=north west] at (\colBx,\ypanel)
+  {Sweep \& selection};
+\node[label, anchor=north west, align=left, font=\scriptsize, text width=\colwidth]
+      at (\colBx,\ypanel-0.4) {%
+  \textbullet\ 62 head configs / backbone\\\phantom{\textbullet} (hidden $\times$ drop $\times$ lr $\times$ wd $\times$ seed) \\
+  \textbullet\ Top-10 chosen by \emph{validation} mean $r$ \\
+  \textbullet\ ViT-L fine-tune: head\_lr $= 10\!\times\!$ backbone\_lr \\
+  \textbullet\ Unweighted averaging ($\Delta_\text{val-wt}\!<\!10^{-4}$)
+};
+
+\node[label, font=\small\bfseries, anchor=north west] at (\colCx,\ypanel)
+  {Test performance (n $=$ 101)};
+\node[label, anchor=north west, align=left, font=\scriptsize\ttfamily, text width=\colwidth]
+      at (\colCx,\ypanel-0.4) {%
+  ViT-B baseline\hfill 0.757\\
+  ViT-L ensemble (10)\hfill 0.821\\
+  ViT-G-224 ensemble (10)\hfill 0.836\\
+  ViT-L fine-tune\hfill 0.835\\
+  ViT-G-518 (var-wt, 10)\hfill 0.848\\
+  \textbf{Final (w/ TTA)}\hfill \textbf{0.858}
+};
+
+\end{tikzpicture}
+\end{document}
