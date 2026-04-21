@@ -63,3 +63,55 @@ def test_predictor_requires_at_least_one_model(tmp_path):
     img = Image.new("RGB", (10, 10), color="white")
     with pytest.raises((RuntimeError, SystemExit)):
         p.predict(img)
+
+
+def test_end_to_end_from_bundle(tiny_bundle):
+    """Load a complete (tiny) bundle and run a prediction end-to-end."""
+    from PIL import Image
+
+    predictor = TraitPredictor.from_bundle(tiny_bundle, device=torch.device("cpu"))
+    img = Image.new("RGB", (64, 64), color=(120, 80, 90))
+
+    # Single image, no TTA
+    row = predictor.predict(img, tta=False)
+    assert "filename" in row.index
+    # 34 attributes + filename
+    assert len(row) == 35
+    # Numeric columns are in 0–100
+    vals = row.drop(labels=["filename"]).to_numpy(dtype=float)
+    assert vals.shape == (34,)
+    assert (vals >= 0).all() and (vals <= 100).all()
+
+    # Batch of two images, with TTA
+    df = predictor.predict([img, img], tta=True)
+    assert df.shape == (2, 35)
+    # Deterministic: same image twice → same prediction (up to numeric noise)
+    np.testing.assert_allclose(
+        df.iloc[0].drop(labels=["filename"]).to_numpy(float),
+        df.iloc[1].drop(labels=["filename"]).to_numpy(float),
+        atol=1e-5,
+    )
+
+
+def test_end_to_end_predict_with_figure(tiny_bundle, tmp_path):
+    from PIL import Image
+
+    predictor = TraitPredictor.from_bundle(tiny_bundle, device=torch.device("cpu"))
+    img = Image.new("RGB", (64, 64), color=(120, 80, 90))
+    out_png = tmp_path / "diag.png"
+    row, fig = predictor.predict_with_figure(img, out_path=out_png)
+    assert out_png.exists() and out_png.stat().st_size > 1000
+    assert len(row) == 34
+    import matplotlib
+    assert isinstance(fig, matplotlib.figure.Figure)
+
+
+def test_bootstrap_mean_metric_shapes():
+    from face_trait_transformer.metrics import bootstrap_mean_metric
+    rng = np.random.default_rng(0)
+    y_true = rng.random((30, 5)) * 100
+    y_pred = y_true + rng.normal(0, 5, y_true.shape)
+    res = bootstrap_mean_metric(y_true, y_pred, metric="pearson_r", n_boot=200)
+    assert 0 <= res["point"] <= 1
+    assert res["ci_lo"] <= res["point"] <= res["ci_hi"]
+    assert res["n_boot"] == 200

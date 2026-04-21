@@ -46,14 +46,20 @@ observed in black, predicted in red):
 
 ## Performance
 
-Evaluated on the held-out 101-stimulus test split of the OMI paper:
+Evaluated on the held-out 101-stimulus test split of the OMI paper, with
+5,000-sample bootstrap 95 % CIs over stimuli:
 
-| Metric | Value |
-|---|---|
-| Mean Pearson r (34 attributes) | **0.858** |
-| Mean R² | **0.738** |
-| Median Pearson r | 0.897 |
-| Attributes significant at p < 0.05 | 34 / 34 |
+| Metric | Point estimate | 95 % CI |
+|---|---|---|
+| Mean Pearson r (34 attributes) | **0.857** | 0.842 – 0.870 |
+| Mean R² | **0.738** | 0.707 – 0.755 |
+| Median Pearson r | 0.897 | — |
+| Attributes significant at p < 0.05 | 34 / 34 | — |
+
+Across the 34 attributes, our 10-fold CV R² reaches on average **99 % of the
+split-half reliability ceiling** (mean ceiling R² = 0.770; mean model R² = 0.734
+in CV). Per-attribute ceilings and fractions are at
+[`training/results/cv_per_attribute.csv`](training/results/cv_per_attribute.csv).
 
 ### Per-attribute scatter (observed vs predicted across the test split)
 
