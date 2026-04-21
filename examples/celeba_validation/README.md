@@ -77,6 +77,27 @@ when the shaded band is narrow the prediction is stable across photos.
 34-d trait space and colors/labels by identity. PC1 + PC2 together capture
 ~59 % of variance; same-identity photos visibly cluster.
 
+## Example diagnostics
+
+Four per-face diagnostic panels (image + 34-attribute radar + sorted bar chart)
+for a sample of four identities spanning the distinctiveness range, plus a
+within-identity overlay figure visualizing how stable the trait vector is
+across a single celebrity's 10 photos.
+
+| File | What it shows |
+|---|---|
+| `diagnostics/identity_08_001693.png` | identity 8 (near the grand mean of all predictions) |
+| `diagnostics/identity_44_013251.png` | identity 44 |
+| `diagnostics/identity_34_032470.png` | identity 34 |
+| `diagnostics/identity_15_091612.png` | identity 15 (most distinctive in trait space) |
+| `diagnostics/within_identity_overlay.png` | identity 15 — 10 individual photos as translucent red lines, with the identity mean in black |
+
+The overlay is the key within-identity stability visualization: tightly
+clustered red lines where the black mean sits mean the model gives the same
+answer across this person's 10 photos (identity-defining traits); wider
+spread means the model lets that attribute vary photo-to-photo (state-
+dependent traits). Matches what the ICC table numerically says.
+
 ## Reproducing this example
 
 ```bash
