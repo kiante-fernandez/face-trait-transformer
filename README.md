@@ -4,6 +4,10 @@ Predict a **34-dimensional perceived-trait vector** from a face image. Trained
 on the [One Million Impressions (OMI)](https://github.com/jcpeterson/omi)
 dataset (Peterson et al., 2022, *PNAS*).
 
+- **Model weights**: [`kiante/face-trait-transformer` on HuggingFace Hub](https://huggingface.co/kiante/face-trait-transformer) (currently private; pulled automatically by `from_pretrained`).
+- **Methods**: [`docs/methods.md`](docs/methods.md) (paper-ready writeup, including head-to-head with Peterson et al. 2022).
+- **Model card**: [`docs/model_card.md`](docs/model_card.md) (intended use, biases, limitations).
+
 ## Install
 
 ```bash
