@@ -25,7 +25,7 @@ def main() -> int:
         raise SystemExit(f"no images found under {faces_dir}")
     print(f"Running TraitPredictor on {len(paths)} images...")
 
-    predictor = TraitPredictor.from_pretrained("kiante/face-trait-transformer")
+    predictor = TraitPredictor.from_pretrained()  # defaults to kiante/face-trait-transformer
     df = predictor.predict([str(p) for p in paths], batch_size=8, tta=True)
 
     out_csv.parent.mkdir(parents=True, exist_ok=True)

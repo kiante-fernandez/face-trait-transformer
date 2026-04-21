@@ -11,6 +11,7 @@ See docs/methods.md for the full training recipe.
 from __future__ import annotations
 
 import json
+import logging
 from collections.abc import Iterable, Sequence
 from pathlib import Path
 
@@ -22,6 +23,8 @@ from torch import nn
 from .features import build_transform, pick_device
 from .hub import DEFAULT_REPO, download_from_hub
 from .model import TraitHead
+
+logger = logging.getLogger(__name__)
 
 
 class TraitPredictor:
@@ -100,7 +103,7 @@ class TraitPredictor:
         base = spec["base_model"]
         image_size = int(spec["image_size"])
         if base not in self._base_models:
-            print(f"[TraitPredictor] loading base model {base} on {self.device}...")
+            logger.info("loading base model %s on %s", base, self.device)
             model = torch.hub.load("facebookresearch/dinov2", base)
             model.eval().to(self.device)
             self._base_models[base] = (model, int(model.norm.weight.shape[0]))
@@ -134,7 +137,7 @@ class TraitPredictor:
             cfg = ck["config"]
             if list(cfg["attr_names"]) != self.attr_names:
                 raise ValueError(f"finetune {p.name} attr_names disagree with manifest")
-            print(f"[TraitPredictor] loading finetune {p.name} on {self.device}...")
+            logger.info("loading finetune %s on %s", p.name, self.device)
             backbone = torch.hub.load("facebookresearch/dinov2", cfg["backbone"])
             head = TraitHead(
                 in_dim=cfg["in_dim"], out_dim=cfg["out_dim"],
@@ -181,6 +184,7 @@ class TraitPredictor:
         batch_size: int = 16,
         return_dataframe: bool = True,
         tta: bool = True,
+        progress: bool = True,
     ):
         """Predict the 34-d trait vector for one or more images.
 
@@ -190,6 +194,8 @@ class TraitPredictor:
         batch_size        : forward-pass batch size (lower if VRAM/MPS-tight).
         return_dataframe  : return a pandas DataFrame (default) or numpy array.
         tta               : average predictions on image + horizontal flip.
+        progress          : show a tqdm progress bar for batched inputs
+                            (auto-disabled for single-image calls).
 
         Returns
         -------
@@ -213,9 +219,15 @@ class TraitPredictor:
                 img = Image.open(item).convert("RGB"); name = str(item)
             pils.append(img); filenames.append(name)
 
-        def _chunks(pil_list: list[Image.Image], fwd):
+        from tqdm.auto import tqdm as _tqdm
+        show_bar = progress and len(pils) > batch_size
+
+        def _chunks(pil_list: list[Image.Image], fwd, desc: str = "predict"):
             outs = []
-            for s in range(0, len(pil_list), batch_size):
+            starts = range(0, len(pil_list), batch_size)
+            iterator = _tqdm(starts, desc=desc, leave=False, disable=not show_bar,
+                             total=(len(pil_list) + batch_size - 1) // batch_size)
+            for s in iterator:
                 outs.append(fwd(pil_list[s : s + batch_size]))
             return torch.cat(outs, dim=0)
 

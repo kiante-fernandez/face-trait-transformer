@@ -99,7 +99,8 @@ https://github.com/jcpeterson/omi.
 
 ## Citation
 
-If you use this model, please cite the underlying dataset:
+If you use this model, please cite **both** the underlying OMI dataset and
+this repository:
 
 ```bibtex
 @article{peterson2022omi,
@@ -109,6 +110,14 @@ If you use this model, please cite the underlying dataset:
   journal={Proceedings of the National Academy of Sciences},
   volume={119}, number={17}, pages={e2115228119}, year={2022},
   doi={10.1073/pnas.2115228119}
+}
+
+@misc{fernandez2026facetrait,
+  title        = {face-trait-transformer: Predicting 34-dimensional perceived-trait vectors from face images},
+  author       = {Fernandez, Kiante},
+  year         = {2026},
+  howpublished = {GitHub},
+  url          = {https://github.com/kiante-fernandez/face-trait-transformer},
 }
 ```
 

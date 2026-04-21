@@ -1,10 +1,16 @@
 # face-trait-transformer
 
+[![License: MIT](https://img.shields.io/badge/License%20(code)-MIT-blue.svg)](LICENSE)
+[![Weights: CC BY-NC-SA 4.0](https://img.shields.io/badge/License%20(weights)-CC%20BY--NC--SA%204.0-lightgrey.svg)](LICENSE-WEIGHTS)
+[![Python 3.9–3.12](https://img.shields.io/badge/Python-3.9–3.12-blue.svg)](https://www.python.org/)
+[![HuggingFace](https://img.shields.io/badge/🤗%20HF%20Hub-kiante%2Fface--trait--transformer-ffce1b.svg)](https://huggingface.co/kiante/face-trait-transformer)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/kiante-fernandez/face-trait-transformer/blob/main/examples/quickstart.ipynb)
+
 Predict a **34-dimensional perceived-trait vector** from a face image. Trained
 on the [One Million Impressions (OMI)](https://github.com/jcpeterson/omi)
 dataset (Peterson et al., 2022, *PNAS*).
 
-- **Model weights**: [`kiante/face-trait-transformer` on HuggingFace Hub](https://huggingface.co/kiante/face-trait-transformer) (currently private; pulled automatically by `from_pretrained`).
+- **Model weights**: [`kiante/face-trait-transformer` on HuggingFace Hub](https://huggingface.co/kiante/face-trait-transformer) (pulled automatically by `from_pretrained`).
 - **Methods**: [`docs/methods.md`](docs/methods.md) (paper-ready writeup, including head-to-head with Peterson et al. 2022).
 - **Model card**: [`docs/model_card.md`](docs/model_card.md) (intended use, biases, limitations).
 
@@ -13,6 +19,15 @@ dataset (Peterson et al., 2022, *PNAS*).
 ```bash
 pip install face-trait-transformer[hub,figures]
 ```
+
+### First run
+
+The very first call to `from_pretrained` downloads:
+
+- ~1.2 GB of MLP heads + fine-tune checkpoint from HuggingFace Hub (cached under `~/.cache/huggingface/…`).
+- ~1.2 GB for the DINOv2 ViT-G/14 backbone via `torch.hub` (cached under `~/.cache/torch/hub/checkpoints/`).
+
+So expect ~2.5 GB of traffic and 5–15 min on typical home internet on the first call. Subsequent calls are offline.
 
 ## Use
 
@@ -123,7 +138,10 @@ tests/                          package smoke tests
 
 ## Citation
 
-If you use this model, please cite the underlying dataset:
+If you use this model, please cite **both** the underlying OMI dataset and this
+repository. The model's predictive behavior is entirely derived from the OMI
+training data; the repository contributes the architecture, training recipe,
+and distribution.
 
 ```bibtex
 @article{peterson2022omi,
@@ -133,6 +151,15 @@ If you use this model, please cite the underlying dataset:
   journal = {Proceedings of the National Academy of Sciences},
   volume  = {119}, number = {17}, pages = {e2115228119}, year = {2022},
   doi     = {10.1073/pnas.2115228119}
+}
+
+@misc{fernandez2026facetrait,
+  title        = {face-trait-transformer: Predicting 34-dimensional perceived-trait
+                  vectors from face images},
+  author       = {Fernandez, Kiante},
+  year         = {2026},
+  howpublished = {GitHub},
+  url          = {https://github.com/kiante-fernandez/face-trait-transformer},
 }
 ```
 

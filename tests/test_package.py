@@ -106,6 +106,29 @@ def test_end_to_end_predict_with_figure(tiny_bundle, tmp_path):
     assert isinstance(fig, matplotlib.figure.Figure)
 
 
+def test_predict_progress_suppression(tiny_bundle, capsys):
+    """progress=False should not emit a tqdm bar to stderr/stdout."""
+    from PIL import Image
+
+    predictor = TraitPredictor.from_bundle(tiny_bundle, device=torch.device("cpu"))
+    imgs = [Image.new("RGB", (64, 64), color=(i * 20, 50, 100)) for i in range(5)]
+    _ = predictor.predict(imgs, batch_size=2, tta=False, progress=False)
+    captured = capsys.readouterr()
+    # tqdm writes to stderr by default; with disable=True, no bar glyphs.
+    for glyph in ("it/s", "predict"):
+        assert glyph not in captured.err
+        assert glyph not in captured.out
+
+
+def test_predict_logger_is_module_level():
+    """Library code must use logging, not print."""
+    import logging
+
+    from face_trait_transformer import predictor as _pred
+    assert isinstance(_pred.logger, logging.Logger)
+    assert _pred.logger.name == "face_trait_transformer.predictor"
+
+
 def test_bootstrap_mean_metric_shapes():
     from face_trait_transformer.metrics import bootstrap_mean_metric
     rng = np.random.default_rng(0)

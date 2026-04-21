@@ -17,7 +17,7 @@ def main() -> int:
         print("usage: python quickstart.py path/to/face.jpg")
         return 1
     img = Path(sys.argv[1])
-    predictor = TraitPredictor.from_pretrained("kiante/face-trait-transformer")
+    predictor = TraitPredictor.from_pretrained()  # defaults to kiante/face-trait-transformer
     row, fig = predictor.predict_with_figure(img, out_path="diag.png")
     print(row.to_string())
     print("wrote diag.png")

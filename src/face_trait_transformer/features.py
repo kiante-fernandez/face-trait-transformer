@@ -21,20 +21,21 @@ def pick_device() -> torch.device:
 
 
 def build_transform(image_size: int = 224):
-    """The DINOv2 preprocessing pipeline.
+    """The DINOv2 preprocessing pipeline (torchvision v2 API).
 
     Bicubic resize (shorter side = image_size * 256/224), center-crop to
     image_size x image_size, convert to float tensor in [0, 1], ImageNet
     mean/std normalization.
     """
-    from torchvision import transforms  # local import keeps torchvision optional at import
+    from torchvision.transforms import v2  # lazy import keeps torchvision optional at import
 
     resize_to = int(round(image_size * 256 / 224))
-    return transforms.Compose([
-        transforms.Resize(resize_to, interpolation=transforms.InterpolationMode.BICUBIC),
-        transforms.CenterCrop(image_size),
-        transforms.ToTensor(),
-        transforms.Normalize(_IMAGENET_MEAN, _IMAGENET_STD),
+    return v2.Compose([
+        v2.Resize(resize_to, interpolation=v2.InterpolationMode.BICUBIC, antialias=True),
+        v2.CenterCrop(image_size),
+        v2.ToImage(),
+        v2.ToDtype(torch.float32, scale=True),
+        v2.Normalize(_IMAGENET_MEAN, _IMAGENET_STD),
     ])
 
 

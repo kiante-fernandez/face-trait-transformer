@@ -68,6 +68,19 @@ If you've already downloaded the bundle (or trained your own via
 m = TraitPredictor.from_bundle("/path/to/bundle")
 ```
 
+## Silence the loading messages
+
+The predictor logs backbone/finetune loading via stdlib `logging` (level `INFO`).
+Silence them with:
+
+```python
+import logging
+logging.getLogger("face_trait_transformer").setLevel(logging.WARNING)
+```
+
+The per-batch progress bar on `predict()` can be turned off with
+`predict(..., progress=False)`.
+
 ## Notes
 
 - Values are returned on a **0–100** scale and clamped. 0 = least / most-feminine /

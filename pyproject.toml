@@ -31,13 +31,13 @@ dependencies = [
     "pandas>=2.0",
     "pillow>=10.0",
     "scipy>=1.11",
+    "tqdm>=4.65",
 ]
 
 [project.optional-dependencies]
 hub = ["huggingface_hub>=0.20"]
 figures = ["matplotlib>=3.7"]
 training = [
-    "tqdm>=4.65",
     "matplotlib>=3.7",
 ]
 dev = [
